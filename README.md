@@ -65,6 +65,16 @@ erDiagram
 
 ---
 
+MySQL Workbench 中的 EER 圖：
+
+![EER 圖](docs/screenshots/eer-diagram.jpg)
+
+系統功能架構（會員、公開、管理員功能）：
+
+![系統功能架構](docs/screenshots/system-functions.jpg)
+
+---
+
 ## 🔄 借閱流程
 
 ```mermaid
@@ -141,6 +151,12 @@ CALL BorrowBook(3, 3, CURDATE());          -- ✅ 預約者借閱，預約自動
 CALL CheckOverdueAndNotify();              -- 產生逾期通知
 SELECT * FROM notification WHERE MemberID = 1;
 ```
+
+---
+
+在 MySQL Workbench 中呼叫預存程序的畫面：
+
+![在 Workbench 呼叫 BorrowBook](docs/screenshots/workbench-borrowbook.jpg)
 
 ---
 
