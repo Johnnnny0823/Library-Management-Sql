@@ -122,10 +122,12 @@ flowchart LR
 ## 🚀 匯入方式
 
 ```bash
-mysql -u root -p < librarydb.sql
+mysql -u library_schema_owner -p < librarydb.sql
 ```
 
-會建立 `librarydb` 資料庫並匯入範例資料（範例會員資料皆為虛構）。
+請先由資料庫管理員建立專用的 `library_schema_owner`，將建表、匯入與建立觸發器所需權限限制在 `librarydb`。觸發器仍以匯入者身分執行，需保留觸發器讀寫相關資料表的權限。應用程式依需要取得檢視表、預存程序及其基礎物件的權限。檢視表與預存程序使用 `SQL SECURITY INVOKER`。
+
+匯入會依備份內容重建同名物件，請使用獨立的展示資料庫。範例會員以合成名稱及 `example.invalid` 信箱表示，密碼和電話欄位為 `NULL`，原會員 ID 保留供借閱與預約資料關聯。
 
 > 本專案在 Windows 的 MySQL 8 上開發。預存程序中部分資料表名稱使用大寫開頭（如 `Book`），
 > Linux／macOS 預設區分大小寫，需要先在 MySQL 設定 `lower_case_table_names=1` 再匯入。

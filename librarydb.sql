@@ -125,7 +125,7 @@ DROP TABLE IF EXISTS `member`;
 CREATE TABLE `member` (
   `MemberID` int NOT NULL AUTO_INCREMENT,
   `MemberName` varchar(100) NOT NULL,
-  `MemberPassword` varchar(255) NOT NULL,
+  `MemberPassword` varchar(255) DEFAULT NULL,
   `MemberPhone` varchar(20) DEFAULT NULL,
   `MemberEmail` varchar(100) NOT NULL,
   PRIMARY KEY (`MemberID`),
@@ -139,7 +139,7 @@ CREATE TABLE `member` (
 
 LOCK TABLES `member` WRITE;
 /*!40000 ALTER TABLE `member` DISABLE KEYS */;
-INSERT INTO `member` VALUES (1,'小明','pw123','0911222333','ming@example.com'),(2,'小華','pw456','0922333444','hua@example.com'),(3,'張文博','pw003','0910000003','member3@example.com'),(4,'李佳玲','pw004','0910000004','member4@example.com'),(5,'周冠廷','pw005','0910000005','member5@example.com'),(6,'林品妤','pw006','0910000006','member6@example.com'),(7,'陳威廷','pw007','0910000007','member7@example.com'),(8,'徐語柔','pw008','0910000008','member8@example.com'),(9,'黃宗翰','pw009','0910000009','member9@example.com'),(10,'吳靜怡','pw010','0910000010','member10@example.com'),(11,'簡宏宇','pw011','0910000011','member11@example.com'),(12,'游佳萱','pw012','0910000012','member12@example.com'),(13,'魏子翔','pw013','0910000013','member13@example.com'),(14,'曾雅婷','pw014','0910000014','member14@example.com'),(15,'謝柏豪','pw015','0910000015','member15@example.com'),(16,'洪佳雯','pw016','0910000016','member16@example.com'),(17,'蔡于庭','pw017','0910000017','member17@example.com'),(18,'阿哲','pass111','0911111111','che@example.com'),(19,'阿珍','pass222','0922222222','jen@example.com'),(20,'小志','pass333','0933333333','chi@example.com'),(21,'小琪','pass444','0944444444','chi2@example.com'),(22,'美雲','pass555','0955555555','mei@example.com'),(23,'揚塵家','11244234','0911666888','jia@example.com'),(24,'Eli','11244208','0911777888','ELI@example.com'),(25,'黃茂登','11244215','0911766888','maoDAMN@example.com'),(26,'陳家揚','11244200','0911665888','YANGJIA@example.com'),(29,'林晨','11244229','0928650986','GayLin@example.com');
+INSERT INTO `member` VALUES (1,'Demo Member 1',NULL,NULL,'member1@example.invalid'),(2,'Demo Member 2',NULL,NULL,'member2@example.invalid'),(3,'Demo Member 3',NULL,NULL,'member3@example.invalid'),(4,'Demo Member 4',NULL,NULL,'member4@example.invalid'),(5,'Demo Member 5',NULL,NULL,'member5@example.invalid'),(6,'Demo Member 6',NULL,NULL,'member6@example.invalid'),(7,'Demo Member 7',NULL,NULL,'member7@example.invalid'),(8,'Demo Member 8',NULL,NULL,'member8@example.invalid'),(9,'Demo Member 9',NULL,NULL,'member9@example.invalid'),(10,'Demo Member 10',NULL,NULL,'member10@example.invalid'),(11,'Demo Member 11',NULL,NULL,'member11@example.invalid'),(12,'Demo Member 12',NULL,NULL,'member12@example.invalid'),(13,'Demo Member 13',NULL,NULL,'member13@example.invalid'),(14,'Demo Member 14',NULL,NULL,'member14@example.invalid'),(15,'Demo Member 15',NULL,NULL,'member15@example.invalid'),(16,'Demo Member 16',NULL,NULL,'member16@example.invalid'),(17,'Demo Member 17',NULL,NULL,'member17@example.invalid'),(18,'Demo Member 18',NULL,NULL,'member18@example.invalid'),(19,'Demo Member 19',NULL,NULL,'member19@example.invalid'),(20,'Demo Member 20',NULL,NULL,'member20@example.invalid'),(21,'Demo Member 21',NULL,NULL,'member21@example.invalid'),(22,'Demo Member 22',NULL,NULL,'member22@example.invalid'),(23,'Demo Member 23',NULL,NULL,'member23@example.invalid'),(24,'Demo Member 24',NULL,NULL,'member24@example.invalid'),(25,'Demo Member 25',NULL,NULL,'member25@example.invalid'),(26,'Demo Member 26',NULL,NULL,'member26@example.invalid'),(29,'Demo Member 29',NULL,NULL,'member29@example.invalid');
 /*!40000 ALTER TABLE `member` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -226,7 +226,7 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `trg_before_borrow_reservation_check` BEFORE INSERT ON `record` FOR EACH ROW BEGIN
+/*!50003 CREATE*/ /*!50003 TRIGGER `trg_before_borrow_reservation_check` BEFORE INSERT ON `record` FOR EACH ROW BEGIN
   DECLARE first_reserver INT;
 
   -- 如果這本書目前有人預約，找出第一順位（最早預約的會員）
@@ -256,7 +256,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `trg_after_borrow` AFTER INSERT ON `record` FOR EACH ROW BEGIN
+/*!50003 CREATE*/ /*!50003 TRIGGER `trg_after_borrow` AFTER INSERT ON `record` FOR EACH ROW BEGIN
   UPDATE Book
   SET BookStatus = '已借出'
   WHERE BookID = NEW.BookID;
@@ -275,7 +275,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `trg_after_return` AFTER UPDATE ON `record` FOR EACH ROW BEGIN
+/*!50003 CREATE*/ /*!50003 TRIGGER `trg_after_return` AFTER UPDATE ON `record` FOR EACH ROW BEGIN
   -- 只有在歸還書籍時才執行
   IF NEW.ReturnDate IS NOT NULL AND OLD.ReturnDate IS NULL THEN
     UPDATE Book
@@ -352,11 +352,12 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `BorrowBook`(
+CREATE PROCEDURE `BorrowBook`(
   IN p_MemberID INT,
   IN p_BookID INT,
   IN p_BorrowDate DATE
 )
+SQL SECURITY INVOKER
 BEGIN
   DECLARE book_status VARCHAR(20);
 
@@ -405,10 +406,11 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `CancelReservation`(
+CREATE PROCEDURE `CancelReservation`(
   IN p_MemberID INT,
   IN p_BookID INT
 )
+SQL SECURITY INVOKER
 BEGIN
   DECLARE exists_resv INT;
 
@@ -442,7 +444,8 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `CheckOverdueAndNotify`()
+CREATE PROCEDURE `CheckOverdueAndNotify`()
+SQL SECURITY INVOKER
 BEGIN
   INSERT INTO Notification (MemberID, Message, NotifyDate)
   SELECT 
@@ -474,7 +477,8 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `CheckUpcomingReservationAndForceReturn`()
+CREATE PROCEDURE `CheckUpcomingReservationAndForceReturn`()
+SQL SECURITY INVOKER
 BEGIN
   INSERT INTO Notification (MemberID, Message, NotifyDate)
   SELECT
@@ -505,11 +509,12 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ReserveBook`(
+CREATE PROCEDURE `ReserveBook`(
   IN p_MemberID INT,
   IN p_BookID INT,
   IN p_ReserveDate DATE
 )
+SQL SECURITY INVOKER
 BEGIN
   DECLARE book_status VARCHAR(20);
   DECLARE already_reserved INT;
@@ -555,11 +560,12 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ReturnBook`(
+CREATE PROCEDURE `ReturnBook`(
   IN p_MemberID INT,
   IN p_BookID INT,
   IN p_ReturnDate DATE
 )
+SQL SECURITY INVOKER
 BEGIN
   DECLARE v_RecordID INT;
   DECLARE v_AlreadyReturned BOOLEAN;
@@ -617,7 +623,7 @@ DELIMITER ;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50013 SQL SECURITY INVOKER */
 /*!50001 VIEW `borrowedbooks` AS select `r`.`RecordID` AS `RecordID`,`m`.`MemberName` AS `MemberName`,`b`.`BookTitle` AS `BookTitle`,`r`.`BorrowDate` AS `BorrowDate` from ((`record` `r` join `member` `m` on((`r`.`MemberID` = `m`.`MemberID`))) join `book` `b` on((`r`.`BookID` = `b`.`BookID`))) where (`r`.`ReturnDate` is null) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -635,7 +641,7 @@ DELIMITER ;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50013 SQL SECURITY INVOKER */
 /*!50001 VIEW `overduebooks` AS select `r`.`RecordID` AS `RecordID`,`m`.`MemberName` AS `MemberName`,`b`.`BookTitle` AS `BookTitle`,`r`.`BorrowDate` AS `BorrowDate`,(to_days(curdate()) - to_days(`r`.`BorrowDate`)) AS `DaysBorrowed` from ((`record` `r` join `member` `m` on((`r`.`MemberID` = `m`.`MemberID`))) join `book` `b` on((`r`.`BookID` = `b`.`BookID`))) where ((`r`.`ReturnDate` is null) and ((to_days(curdate()) - to_days(`r`.`BorrowDate`)) > 14)) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -653,7 +659,7 @@ DELIMITER ;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50013 SQL SECURITY INVOKER */
 /*!50001 VIEW `recordsummary` AS select `r`.`RecordID` AS `RecordID`,`m`.`MemberName` AS `MemberName`,`b`.`BookTitle` AS `BookTitle`,`r`.`BorrowDate` AS `BorrowDate`,`r`.`ReturnDate` AS `ReturnDate` from ((`record` `r` join `member` `m` on((`r`.`MemberID` = `m`.`MemberID`))) join `book` `b` on((`r`.`BookID` = `b`.`BookID`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
